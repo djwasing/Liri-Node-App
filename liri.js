@@ -1,29 +1,74 @@
 require("dotenv").config();
 var keys = require("./keys.js");
-// Spotify ---------------------
 var Spotify = require('node-spotify-api');
 var axios = require('axios');
 var moment = require('moment');
 var action = process.argv[2];
+var file = require('file-system');
+var fs = require('fs');
+var media;
 
 
-switch (action) {
-    case 'spotify-this-song':
-        var songName = process.argv[3];
-        spotify(songName);
-        break;
-    case 'movie-this':
-        var movieTitle = process.argv[3];
-        movie(movieTitle);
-        break;
-    case 'concert-this':
-        var artist = process.argv[3];
-        concert(artist);
-        break;
 
-    default:
-        break;
-}
+//function switchFunc(action, media) {
+    switch (action) {
+        case 'spotify-this-song':
+            var songName = process.argv.slice(3).join(" ");
+            spotify(songName);
+            break;
+        case 'movie-this':
+            var movieTitle = process.argv.slice(3).join(" ");
+            movie(movieTitle);
+            break;
+        case 'concert-this':
+            var artist = process.argv.slice(3).join(" ");
+            concert(artist);
+            break;
+        case 'do-what-it-says':
+            randomFile();
+        default:
+            break;
+    }
+//}
+
+//switchFunc();
+
+
+// ------------- random.txt ----------------
+// -----------------------------------------
+function randomFile(err, data) {
+    var data = fs.readFileSync('random.txt', 'utf8');
+    //console.log(data);
+    var stringData = (data.toString());  
+    var dataArr = stringData.split(',');
+    action = dataArr[0];
+    media = dataArr[1].trim();
+    // switchFunc(action, media);
+    console.log(action, media);
+    switch (action) {
+        case 'spotify-this-song':
+            console.log(`Loading song info...`)
+            var songName = media;
+            spotify(songName);
+            break;
+        case 'movie-this':
+            console.log(`Loading movie info...`)
+            var movieTitle = media;
+            movie(movieTitle);
+            break;
+        case 'concert-this':
+            console.log(`Loading concert info...`)
+            var artist = media;
+            concert(artist);
+            break;
+    }
+    if (err) {
+        console.log('Error occurred: ' + err);
+    }
+} 
+
+
+
 
 
 // ---------------- Spotify -----------------
@@ -69,6 +114,7 @@ function movie(movieTitle) {
 // ----------------- Bands in Town Concert Lists -------------
 // -----------------------------------------------------------
 function concert(artist) {
+    console.log(artist);
 axios.get(`https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`)
   .then(function (response) {
     console.log(`Venue Name: ${response.data[0].venue.name}`);
