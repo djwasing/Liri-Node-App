@@ -13,14 +13,17 @@ var media;
 //function switchFunc(action, media) {
     switch (action) {
         case 'spotify-this-song':
+            console.log(`Loading song info..........`);
             var songName = process.argv.slice(3).join(" ");
             spotify(songName);
             break;
         case 'movie-this':
+            console.log(`Loading movie info...........`);
             var movieTitle = process.argv.slice(3).join(" ");
             movie(movieTitle);
             break;
         case 'concert-this':
+            console.log(`Loading concert info..........`);
             var artist = process.argv.slice(3).join(" ");
             concert(artist);
             break;
@@ -38,26 +41,23 @@ var media;
 // -----------------------------------------
 function randomFile(err, data) {
     var data = fs.readFileSync('random.txt', 'utf8');
-    //console.log(data);
     var stringData = (data.toString());  
     var dataArr = stringData.split(',');
     action = dataArr[0];
     media = dataArr[1].trim();
-    // switchFunc(action, media);
-    console.log(action, media);
     switch (action) {
         case 'spotify-this-song':
-            console.log(`Loading song info...`)
+            console.log(`Loading song info..........`);
             var songName = media;
             spotify(songName);
             break;
         case 'movie-this':
-            console.log(`Loading movie info...`)
+            console.log(`Loading movie info...........`);
             var movieTitle = media;
             movie(movieTitle);
             break;
         case 'concert-this':
-            console.log(`Loading concert info...`)
+            console.log(`Loading concert info..........`);
             var artist = media;
             concert(artist);
             break;
