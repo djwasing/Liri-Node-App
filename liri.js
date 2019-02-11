@@ -10,17 +10,24 @@ var media;
 
 
 
-//function switchFunc(action, media) {
+
     switch (action) {
         case 'spotify-this-song':
             console.log(`Loading song info..........`);
+            if (process.argv[3] === undefined) {
+                console.log("You didn't enter a song title. Here's one for you: ");
+                var songName = "The Sign Ace of Base";
+                spotify(songName);
+                break;
+            }else{
             var songName = process.argv.slice(3).join(" ");
             spotify(songName);
             break;
+            }
         case 'movie-this':
             console.log(`Loading movie info...........`);
             if (process.argv[3] === undefined) {
-                //console.log("no title entered");
+                console.log("You did not enter a movie title. Here's one for you: ");
                 var movieTitle = "Mr. Nobody";
                 movie(movieTitle);
                 break;
@@ -39,9 +46,7 @@ var media;
         default:
             break;
     }
-//}
 
-//switchFunc();
 
 
 // ------------- random.txt ----------------
