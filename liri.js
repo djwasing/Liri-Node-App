@@ -19,9 +19,16 @@ var media;
             break;
         case 'movie-this':
             console.log(`Loading movie info...........`);
+            if (process.argv[3] === undefined) {
+                //console.log("no title entered");
+                var movieTitle = "Mr. Nobody";
+                movie(movieTitle);
+                break;
+            }else{
             var movieTitle = process.argv.slice(3).join(" ");
             movie(movieTitle);
             break;
+            }
         case 'concert-this':
             console.log(`Loading concert info..........`);
             var artist = process.argv.slice(3).join(" ");
